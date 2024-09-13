@@ -1,0 +1,19 @@
+Package: BACH
+Type: Package
+Title: Bayesian Approach for Analyzing Concurrent Response Rate Data with Heterogeneity in Basket Trials
+Version: 0.1.0
+Authors@R: person("Yilun", "Sun", role = c("aut", "cre"), email = "yilunsun@outlook.com")
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: A package for Bayesian analysis of basket trial data that addresses the challenges of subgroups with extremely small sample sizes. It enables flexible information borrowing while accounting for heterogeneity in key factors, such as response rates and sample sizes.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports:
+    dplyr (>= 1.0.0),
+    ggplot2 (>= 3.3.0),
+    purrr (>= 0.3.4),
+    magrittr,
+    tidyr,
+    dbscan,
+    rjags
+RoxygenNote: 7.3.2
