@@ -158,8 +158,11 @@ BACH <- function(group,
                              dplyr::mutate(Comments=ifelse(Group %in% group, NA, "Identified as an extremely small group.")) |>
                              dplyr::arrange(No.Pat))
 
-  if (esfilter) { results <- list(ddss=ddss_results, optmethod=optmethod, mc = mc, mw = mw, summary = outs, post=allPost)}
-  else { results <- list(optmethod=optmethod, mc = mc, mw = mw, summary = outs, post=allPost) }
+  if (esfilter) { results <- list(summary_ds=ddss_results,
+                                  summary_cluster=c.results$summary, optmethod=optmethod, mc = mc, mw = mw,
+                                  post_summary = outs, post=allPost)}
+  else { results <- list(summary_cluster=c.results$summary, optmethod=optmethod, mc = mc, mw = mw,
+                         post_summary = outs, post=allPost) }
 
   return(results)
 
