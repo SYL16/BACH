@@ -319,7 +319,7 @@ cluster.results <- function(group, n, r, alpha = 1, kmin=2, kmax=4, lambda=10^c(
   minmax <- purrr::map_df(gsamp, function(x) minmax(x))
   sum.tab <- dplyr::bind_cols(sil, minmax)
   max_sil <- max(sum.tab$sil)
-  optmethod <- sum.tab |> dplyr::filter(sil>max_sil-delta_sil) |> dplyr::filter(max==min(max)) |> dplyr::slice(dplyr::n()) |> row.names()
+  optmethod <- sum.tab |> dplyr::filter(sil>=max_sil-delta_sil) |> dplyr::filter(max==min(max)) |> dplyr::slice(dplyr::n()) |> row.names()
 
   table <- gsamp[[optmethod]]
   ngroup <- ncol(table)
