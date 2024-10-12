@@ -5,19 +5,19 @@
 #' @param r A vector representing the number of responses in each subgroup.
 #' @param esfilter Logical. Whether to filter out extremely small subgroups. Default is TRUE.
 #' @param escutoff Numeric. The cutoff probability used to identify extremely small subgroups.
-#' @param kmin Integer. The minimum number of components (K) to consider in the Bayesian Finite Gaussian Mixture Model (BFGMM).
+#' @param kmin Integer. The minimum number of components (K) to consider in the Bayesian Finite Gaussian Mixture Model (FGMM).
 #' @param kmax Integer. The maximum number of components (K) to consider in the BFGMM.
-#' @param lambda A numeric vector of tuning parameters for the modified Chinese restaurant process mixed model (m-CRPMM).
-#' @param mu0 Numeric. The hyperprior mean for the BFGMM and m-CRPMM models.
-#' @param sigma0 Numeric. The hyperprior variance for the BFGMM and m-CRPMM models.
-#' @param sigma_y Numeric. Data measurement error for the BFGMM and m-CRPMM models.
+#' @param lambda A numeric vector of tuning parameters for Bayesian Infinite Gaussian Mixture Model (IGMM).
+#' @param mu0 Numeric. The hyperprior mean for the FGMM and IGMM models.
+#' @param sigma0 Numeric. The hyperprior variance for the FGMM and IGMM models.
+#' @param sigma_y Numeric. Data measurement error for the FGMM and IGMM models.
 #' @param w Numeric. A weight parameter (between 0 and 1) that determines the relative importance of subgroup similarity matrices \code{Cij} and \code{Dij}.
-#' @param alpha Numeric. The concentration parameter (alpha) for the Dirichlet Process in m-CRPMM.
-#' @param alpha1 Numeric. Prior shape parameter for borrowing strength in the Bayesian Hierarchical Model (BHM).
-#' @param beta1 Numeric. Prior scale parameter for borrowing strength in the BHM.
-#' @param tau2 Numeric. The hyperprior precision parameter for subgroup means in the BHM.
-#' @param c.burnin Integer. The number of burn-in samples for the BFGMM and m-CRPMM models.
-#' @param c.maxiters Integer. The number of MCMC iterations for the BFGMM and m-CRPMM models.
+#' @param alpha Numeric. The concentration parameter (alpha) for the Dirichlet Process in IGMM.
+#' @param alpha1 Numeric. Gamma Prior shape parameter in the modified Bayesian Hierarchical Model (BHM).
+#' @param beta1 Numeric. Gamma Prior scale parameter in the modified BHM.
+#' @param tau2 Numeric. The hyperprior precision parameter for subgroup means in the modified BHM.
+#' @param c.burnin Integer. The number of burn-in samples for the FGMM and IGMM models.
+#' @param c.maxiters Integer. The number of MCMC iterations for the FGMM and IGMM models.
 #' @param b.burnin Integer. The number of burn-in samples for the BHM model. Default is 5000.
 #' @param b.maxiters Integer. The number of MCMC iterations for the BHM model. Default is 10000.
 #' @param seeds Integer. Random seed for reproducibility.
@@ -44,7 +44,7 @@ BACH <- function(group,
                  sigma_y=0.001,
                  w=0.95,
                  alpha = 1,
-                 alpha1 = 50,
+                 alpha1 = 5,
                  beta1 = 1,
                  tau2 = 0.1,
                  c.burnin=1000,

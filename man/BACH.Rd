@@ -18,7 +18,7 @@ BACH(
   sigma_y = 0.001,
   w = 0.95,
   alpha = 1,
-  alpha1 = 50,
+  alpha1 = 5,
   beta1 = 1,
   tau2 = 0.1,
   c.burnin = 1000,
@@ -39,31 +39,31 @@ BACH(
 
 \item{escutoff}{Numeric. The cutoff probability used to identify extremely small subgroups.}
 
-\item{kmin}{Integer. The minimum number of components (K) to consider in the Bayesian Finite Gaussian Mixture Model (BFGMM).}
+\item{kmin}{Integer. The minimum number of components (K) to consider in the Bayesian Finite Gaussian Mixture Model (FGMM).}
 
 \item{kmax}{Integer. The maximum number of components (K) to consider in the BFGMM.}
 
-\item{lambda}{A numeric vector of tuning parameters for the modified Chinese restaurant process mixed model (m-CRPMM).}
+\item{lambda}{A numeric vector of tuning parameters for Bayesian Infinite Gaussian Mixture Model (IGMM).}
 
-\item{mu0}{Numeric. The hyperprior mean for the BFGMM and m-CRPMM models.}
+\item{mu0}{Numeric. The hyperprior mean for the FGMM and IGMM models.}
 
-\item{sigma0}{Numeric. The hyperprior variance for the BFGMM and m-CRPMM models.}
+\item{sigma0}{Numeric. The hyperprior variance for the FGMM and IGMM models.}
 
-\item{sigma_y}{Numeric. Data measurement error for the BFGMM and m-CRPMM models.}
+\item{sigma_y}{Numeric. Data measurement error for the FGMM and IGMM models.}
 
 \item{w}{Numeric. A weight parameter (between 0 and 1) that determines the relative importance of subgroup similarity matrices \code{Cij} and \code{Dij}.}
 
-\item{alpha}{Numeric. The concentration parameter (alpha) for the Dirichlet Process in m-CRPMM.}
+\item{alpha}{Numeric. The concentration parameter (alpha) for the Dirichlet Process in IGMM.}
 
-\item{alpha1}{Numeric. Prior shape parameter for borrowing strength in the Bayesian Hierarchical Model (BHM).}
+\item{alpha1}{Numeric. Gamma Prior shape parameter in the modified Bayesian Hierarchical Model (BHM).}
 
-\item{beta1}{Numeric. Prior scale parameter for borrowing strength in the BHM.}
+\item{beta1}{Numeric. Gamma Prior scale parameter in the modified BHM.}
 
-\item{tau2}{Numeric. The hyperprior precision parameter for subgroup means in the BHM.}
+\item{tau2}{Numeric. The hyperprior precision parameter for subgroup means in the modified BHM.}
 
-\item{c.burnin}{Integer. The number of burn-in samples for the BFGMM and m-CRPMM models.}
+\item{c.burnin}{Integer. The number of burn-in samples for the FGMM and IGMM models.}
 
-\item{c.maxiters}{Integer. The number of MCMC iterations for the BFGMM and m-CRPMM models.}
+\item{c.maxiters}{Integer. The number of MCMC iterations for the FGMM and IGMM models.}
 
 \item{b.burnin}{Integer. The number of burn-in samples for the BHM model. Default is 5000.}
 
