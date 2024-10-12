@@ -64,8 +64,8 @@ BACH <- function(group,
 
   # Apply extremely small filtering if esfilter is TRUE
   if (esfilter) {
-    filter_results <- esg_filter(group = group, n = n, r = r)
-    filter_results <- filter_results[filter_results$esg.prob< escutoff, ]
+    ddss_results <- esg_filter(group = group, n = n, r = r)
+    filter_results <- ddss_results[ddss_results$esg.prob< escutoff, ]
     group <- filter_results$Group
     n <- filter_results$n
     r <- filter_results$r
@@ -158,7 +158,8 @@ BACH <- function(group,
                              dplyr::mutate(Comments=ifelse(Group %in% group, NA, "Identified as an extremely small group.")) |>
                              dplyr::arrange(No.Pat))
 
-  results <- list(optmethod=optmethod, mc = mc, mw = mw, Summary = outs)
+  if (esfilter) { results <- list(ddss=ddss_results, optmethod=optmethod, mc = mc, mw = mw, summary = outs, post=allPost)}
+  else { results <- list(optmethod=optmethod, mc = mc, mw = mw, summary = outs, post=allPost) }
 
   return(results)
 
