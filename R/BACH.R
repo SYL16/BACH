@@ -159,10 +159,14 @@ BACH <- function(group,
                              dplyr::arrange(No.Pat))
 
   if (esfilter) { results <- list(summary_ds=ddss_results,
-                                  summary_cluster=c.results$summary, optmethod=optmethod, mc = mc, mw = mw,
+                                  summary_cluster=c.results$summary,
+                                  optmethod=optmethod, opttab=c.results$opttab,
+                                  mc = mc, mw = mw,
                                   post_summary = outs, post=allPost)}
-  else { results <- list(summary_cluster=c.results$summary, optmethod=optmethod, mc = mc, mw = mw,
-                         post_summary = outs, post=allPost) }
+  else { results <- list(summary_cluster=c.results$summary,
+                         optmethod=optmethod, opttab=c.results$opttab,
+                         mc = mc, mw = mw,
+                         summary_post = outs, post=allPost) }
 
   return(results)
 
