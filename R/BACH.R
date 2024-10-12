@@ -81,6 +81,9 @@ BACH <- function(group,
                                 burnIn=c.burnin, maxIters=c.maxiters)
   mc <- c.results$sm
   optmethod <- c.results$optmethod
+  opttab <- data.frame(c.results$opttab)
+  names(opttab) <- colnames(c.results$sm)
+
   md <- sm.d(group=group.R, n=n.R)
 
   mw <- w*mc + (1-w)* md
@@ -160,11 +163,11 @@ BACH <- function(group,
 
   if (esfilter) { results <- list(summary_ds=ddss_results,
                                   summary_cluster=c.results$summary,
-                                  optmethod=optmethod, opttab=c.results$opttab,
+                                  optmethod=optmethod, opttab=opttab,
                                   mc = mc, mw = mw,
-                                  post_summary = outs, post=allPost)}
+                                  summary_post = outs, post=allPost)}
   else { results <- list(summary_cluster=c.results$summary,
-                         optmethod=optmethod, opttab=c.results$opttab,
+                         optmethod=optmethod, opttab=opttab,
                          mc = mc, mw = mw,
                          summary_post = outs, post=allPost) }
 
