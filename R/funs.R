@@ -289,6 +289,7 @@ rand <- function(truecluster,samp){
 #' @param sigma0 Numeric. The hyperprior variance for the BFGMM and m-CRPMM models.
 #' @param sigma_y Numeric. Data measurement error for the BFGMM and m-CRPMM models.
 #' @param alpha Numeric. The concentration parameter of the Dirichlet Process.
+#' @param delta_sil Numeric. The tolerable difference in silhouette scores.
 #' @param burnIn Integer. Number of burn-in iterations for Gibbs sampling.
 #' @param maxIters Integer. The number of MCMC samples.
 #'
@@ -302,23 +303,25 @@ rand <- function(truecluster,samp){
 #'
 #' @export
 
-cluster.results <- function(group, n, r, alpha = 1, kmin=2, kmax=4, lambda=10^c(5,10,20,40,80), mu0=0, sigma0=10, sigma_y=0.001, burnIn=1000, maxIters=1000,...){
+cluster.results <- function(group, n, r, alpha = 1, kmin=2, kmax=4, lambda=10^c(5,10,20,40,80), mu0=0, sigma0=10, sigma_y=0.001, delta_sil=0.01, burnIn=1000, maxIters=1000,...){
   res <- r/n
   y <- as.matrix(log((res+0.5/n)/(1-res+0.5/n)))  # empirical logits
   if (kmin>kmax) {kmin=kmax}
   kvec <- seq(kmin, kmax, by=1)
   lambda = lambda
-  method <- c(paste0("BFGMM (K=", kvec,")"), "CRPMM (lambda=1)", paste0("m-CRPMM (lambda=", lambda,")"))
+  method <- c(paste0("FGMM (K=", kvec,")"), "IGMM (alpha=1)", paste0("IGMM (alpha=", (lambda)^-1,")"))
   gsamp.GF <- lapply(kvec, function(x) GF.samp(y, x, burnIn=burnIn, maxIters=maxIters))
   gsamp.GI <- lapply(c(1, lambda), function(x) GI.samp(y, x, burnIn=burnIn, maxIters=maxIters, alpha=alpha, mu0=mu0, sigma0=sigma0, sigma_y=sigma_y))
   gsamp <- c(gsamp.GF, gsamp.GI)
 
   names(gsamp) <- method
   sil <- data.frame(sil=purrr::map_vec(gsamp, function(x) avgsil(y,x)))
-  max.sil <- sil |> dplyr::filter(sil==max(sil)) |> dplyr::slice(dplyr::n()) |> row.names()
   minmax <- purrr::map_df(gsamp, function(x) minmax(x))
   sum.tab <- dplyr::bind_cols(sil, minmax)
-  table <- gsamp[[max.sil]]
+  max_sil <- max(sum.tab$sil)
+  optmethod <- sum.tab |> dplyr::filter(sil>max_sil-delta_sil) |> dplyr::filter(max==min(max)) |> dplyr::slice(dplyr::n()) |> row.names()
+
+  table <- gsamp[[optmethod]]
   ngroup <- ncol(table)
   nruns <- nrow(table)
   sm <- matrix(0, ngroup, ngroup)
@@ -341,7 +344,7 @@ cluster.results <- function(group, n, r, alpha = 1, kmin=2, kmax=4, lambda=10^c(
   colnames(sm.fin) <- group
   out <- list(data=data.frame(Group=group, n=n, r=r),
               summary=sum.tab,
-              optmethod=max.sil,
+              optmethod=optmethod,
               opttab=table,
               sm=sm.fin)
   return(out)

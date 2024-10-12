@@ -15,6 +15,7 @@ cluster.results(
   mu0 = 0,
   sigma0 = 10,
   sigma_y = 0.001,
+  delta_sil = 0.01,
   burnIn = 1000,
   maxIters = 1000,
   ...
@@ -40,6 +41,8 @@ cluster.results(
 \item{sigma0}{Numeric. The hyperprior variance for the BFGMM and m-CRPMM models.}
 
 \item{sigma_y}{Numeric. Data measurement error for the BFGMM and m-CRPMM models.}
+
+\item{delta_sil}{Numeric. The tolerable difference in silhouette scores.}
 
 \item{burnIn}{Integer. Number of burn-in iterations for Gibbs sampling.}
 
